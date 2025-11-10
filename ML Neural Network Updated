@@ -1,0 +1,38 @@
+# Creates a Sequential model with one input, hidden layers, and one dense(output) layer
+model = Sequential([
+    Input(shape = (1,)), # The input layer is expecting 1 feature
+    Dense(64, activation = 'relu'), # First hidden layer with 64 neurons and ReLU activation
+    Dense(64, activation = 'relu'), # Second hidden layer with 64 neurons and ReLU activation
+    Dense(1)             # Output layer with 1 neuron
+])
+
+# Compiles the model with the 'RMSprop' optimizer and mean squared error loss function
+model.compile(optimizer = RMSprop(), loss = 'mean_squared_error')
+
+# Trains the model on the data from 500 epochs
+model.fit(x, y, epochs = 500)
+
+# Modify the code to allow the user to input multiple numbers separated by commas.
+user_input_str = input("Enter numbers for prediction separated by commas: ")
+
+# Convert the user's input string into a list of floats.
+try:
+    user_inputs = [float(x.strip()) for x in user_input_str.split(',')]
+except ValueError:
+    print("Invalid input. Please enter numbers separated by commas.")
+    user_inputs = [] # Set to empty list if input is invalid
+
+# Store the user inputs and their corresponding predictions.
+predictions = []
+
+# Iterate through the list of user inputs and predict the outcome.
+if user_inputs: # Only proceed if user_inputs is not empty after validation
+    for user_input in user_inputs:
+        # For each input, predict the outcome using the trained model.
+        prediction = model.predict(np.array([user_input]))
+        predictions.append((user_input, prediction[0][0]))
+
+    # Print each user input and its predicted value in a clear format.
+    print("\n--- Predictions ---")
+    for input_val, pred_val in predictions:
+        print(f"Input: {input_val} -> Predicted Value: {pred_val}")
