@@ -1,24 +1,32 @@
+# Imports necessaty libreries
 from keras.src.optimizers import optimizer
 from keras.models import Sequential
 from keras.layers import Input, Dense
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Define input (x) and output (y) data
 x = np.array([1, 2, 3, 4, 5, 6], dtype = float)
 y = np.array([100, 200, 300, 400, 500, 600], dtype = float)
 
+# Plot the relationship between x and y
 plt.plot(x,y)
 
+# Creates a Sequential model with one input and one dense(output) layer
 model = Sequential([
-    Input(shape = (1,)),
-    Dense(1)
+    Input(shape = (1,)), # The input layer is expectign 1 feature
+    Dense(1)             # Output layer with 1 neuron
 ])
 
+# Compiles the model with a SGB optimizer and mean squared error loss function
 model.compile(optimizer = 'sgd', loss = 'mean_squared_error')
 
+# Trains the model on the data from 500 epochs
 model.fit(x, y, epochs = 500)
 
+# Uses the trained model to predict the outcome for an unseen input (7)
 model.predict(np.array([7]))
+
 
 Epoch 1/500
 1/1 ━━━━━━━━━━━━━━━━━━━━ 0s 177ms/step - loss: 153809.3906
